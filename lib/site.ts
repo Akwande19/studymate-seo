@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "StudyMate",
   url: "https://www.studymate.app",
   description:
-    "StudyMate helps students plan assignments, build focused study routines, and track academic progress in one calm workspace.",
+    "StudyMate is a student productivity app, study planner, academic task manager, and deadline tracker for organizing coursework and focused study.",
   email: "hello@studymate.app",
 };
 

@@ -2,15 +2,17 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { siteConfig } from "@/lib/site";
+import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "StudyMate | Student Productivity and Study Planner App",
+    default: "StudyMate: Student Productivity App and Study Planner",
     template: "%s | StudyMate",
   },
   description: siteConfig.description,
@@ -38,41 +40,12 @@ export const viewport: Viewport = {
   themeColor: "#4f46e5",
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: siteConfig.name,
-  applicationCategory: "EducationalApplication",
-  applicationSubCategory: "Student Productivity",
-  operatingSystem: "Web",
-  url: siteConfig.url,
-  description: siteConfig.description,
-  offers: [
-    {
-      "@type": "Offer",
-      name: "Starter",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    {
-      "@type": "Offer",
-      name: "StudyMate Pro",
-      price: "6",
-      priceCurrency: "USD",
-    },
-  ],
-  featureList:
-    "Assignment planning, focus timers, progress tracking, smart reminders, study analytics",
-};
-
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <body className="min-h-screen bg-white text-slate-900 antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
-        />
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
         <div className="flex min-h-screen flex-col">
           <Navbar />
           <div className="flex-1">{children}</div>

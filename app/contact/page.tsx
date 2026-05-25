@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/PageHero";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { buildMetadata, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact",
+  title: "Contact StudyMate Student Productivity Support",
   description:
-    "Contact the StudyMate team for student support, campus partnerships, pricing questions, or help getting started.",
+    "Contact StudyMate for student productivity app support, study planner pricing questions, deadline tracker help, or campus partnerships.",
   path: "/contact",
-  keywords: ["contact StudyMate", "student app support", "campus productivity platform"],
+  keywords: ["contact StudyMate", "student productivity app support", "study planner support", "academic task manager"],
 });
 
 const contactOptions = [
@@ -21,10 +24,11 @@ const contactOptions = [
 export default function ContactPage() {
   return (
     <main>
+      <Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]} />
       <PageHero
         eyebrow="Contact"
-        title="How can we help?"
-        description="Reach out with questions about StudyMate, student support, or bringing focused planning to your campus."
+        title="Contact the StudyMate team"
+        description="Get help with the StudyMate student productivity app, ask about a plan, or discuss bringing academic task planning to your campus."
       />
       <section className="py-16 sm:py-24">
         <Container>
@@ -33,6 +37,9 @@ export default function ContactPage() {
               <h2 className="text-2xl font-semibold tracking-tight text-slate-950">Talk to the team</h2>
               <p className="mt-4 text-sm leading-7 text-slate-600">
                 We usually respond within one business day. Select the subject that best fits your request.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-slate-600">
+                For quick product details, review <Link className="font-medium text-indigo-600 hover:text-indigo-700" href="/features">features</Link> and <Link className="font-medium text-indigo-600 hover:text-indigo-700" href="/pricing">pricing</Link> first.
               </p>
               <div className="mt-9 space-y-5">
                 {contactOptions.map((option) => (
@@ -71,6 +78,26 @@ export default function ContactPage() {
           </div>
         </Container>
       </section>
+      <RelatedLinks
+        title="Find StudyMate information"
+        links={[
+          {
+            href: "/",
+            title: "StudyMate overview",
+            description: "Learn what the study planner is and who it serves.",
+          },
+          {
+            href: "/features",
+            title: "Study planner features",
+            description: "View task planning, deadline tracking, and focus tools.",
+          },
+          {
+            href: "/pricing",
+            title: "Pricing plans",
+            description: "Compare free, Pro, and Study Group options.",
+          },
+        ]}
+      />
     </main>
   );
 }
