@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   creator: "StudyMate",
   publisher: "StudyMate",
   category: "education",
+  verification: {
+    google: "Vtb9lLfHRPjkm_FVfRaIhFbprx93u-CZhwm-I7BN1cA",
+  },
   robots: {
     index: true,
     follow: true,
