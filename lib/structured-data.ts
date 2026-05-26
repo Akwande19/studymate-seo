@@ -10,6 +10,14 @@ export type BreadcrumbItem = {
   path: string;
 };
 
+type ArticleSchemaInput = {
+  title: string;
+  description: string;
+  path: string;
+  publishedAt: string;
+  updatedAt: string;
+};
+
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -81,5 +89,33 @@ export function buildBreadcrumbSchema(items: BreadcrumbItem[]) {
       name: item.name,
       item: `${siteConfig.url}${item.path}`,
     })),
+  };
+}
+
+export function buildArticleSchema({
+  title,
+  description,
+  path,
+  publishedAt,
+  updatedAt,
+}: ArticleSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    datePublished: publishedAt,
+    dateModified: updatedAt,
+    mainEntityOfPage: `${siteConfig.url}${path}`,
+    author: {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+    },
   };
 }

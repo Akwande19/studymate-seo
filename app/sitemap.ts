@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { blogArticles, getArticlePath } from "@/lib/blog-articles";
 import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -9,6 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/pricing", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" as const },
     { path: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
+    ...blogArticles.map((article) => ({
+      path: getArticlePath(article),
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+    })),
   ];
 
   return pages.map((page) => ({
