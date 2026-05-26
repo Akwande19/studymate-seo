@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const siteConfig = {
   name: "StudyMate",
-  url: "https://www.studymate.app",
+  url: "https://studymate-seo.vercel.app",
   description:
     "StudyMate is a student productivity app, study planner, academic task manager, and deadline tracker for organizing coursework and focused study.",
   email: "hello@studymate.app",

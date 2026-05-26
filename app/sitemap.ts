@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
-    { path: "", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/", priority: 1, changeFrequency: "weekly" as const },
     { path: "/features", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/pricing", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" as const },
