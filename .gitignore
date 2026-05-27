@@ -2,12 +2,10 @@
 /node_modules
 /.npm-cache
 
-# next.js
+# generated builds
 /.next/
 /out/
-
-# production
-/build
+/dist/
 
 # misc
 .DS_Store
