@@ -125,7 +125,7 @@ p {
   position: relative;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   scrollbar-width: none;
 }
 
@@ -135,13 +135,28 @@ p {
 
 .app-screen {
   position: relative;
-  min-height: 100%;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
   padding: 20px 20px 30px;
   background: var(--background);
 }
 
 .has-bottom-nav {
-  padding-bottom: 92px;
+  padding: 0;
+}
+
+.screen-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 20px 110px;
+  scrollbar-width: none;
+}
+
+.screen-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .screen-header {
@@ -585,16 +600,17 @@ p {
 }
 
 .bottom-nav {
-  position: fixed;
-  bottom: calc((100vh - min(844px, calc(100vh - 40px))) / 2 + 8px);
-  left: 50%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10;
   display: grid;
-  width: min(374px, calc(100vw - 16px));
-  height: 73px;
-  transform: translateX(-50%);
+  width: 100%;
+  height: 82px;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
+  padding-bottom: 12px;
   border-top: 1px solid var(--border);
   background: #fff;
   box-shadow: 0 -7px 20px rgba(31, 41, 55, 0.04);
@@ -665,7 +681,7 @@ p {
 .floating-add {
   position: absolute;
   right: 21px;
-  bottom: 89px;
+  bottom: 105px;
   display: grid;
   width: 56px;
   height: 56px;

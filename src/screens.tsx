@@ -81,53 +81,55 @@ export function DashboardScreen() {
 
   return (
     <main className="app-screen has-bottom-nav dashboard-screen">
-      <header className="dashboard-header">
-        <div>
-          <p className="greeting">Hi, Akwande <span aria-hidden="true">👋</span></p>
-          <h1>Here&apos;s your study overview</h1>
-        </div>
-        <button className="notification-button" aria-label="Notifications">
-          <Bell size={21} />
-          <span />
-        </button>
-      </header>
-
-      <section className="overview-card" aria-label="Weekly study progress">
-        <div className="streak-panel">
-          <span className="streak-icon" aria-hidden="true">7</span>
+      <div className="screen-scroll">
+        <header className="dashboard-header">
           <div>
-            <small>Study streak</small>
-            <strong>7 days</strong>
+            <p className="greeting">Hi, Akwande <span aria-hidden="true">👋</span></p>
+            <h1>Here&apos;s your study overview</h1>
           </div>
-        </div>
-        <ProgressRing value={70} />
-      </section>
+          <button className="notification-button" aria-label="Notifications">
+            <Bell size={21} />
+            <span />
+          </button>
+        </header>
 
-      <ProgressBar value={70} label="Weekly progress" />
+        <section className="overview-card" aria-label="Weekly study progress">
+          <div className="streak-panel">
+            <span className="streak-icon" aria-hidden="true">7</span>
+            <div>
+              <small>Study streak</small>
+              <strong>7 days</strong>
+            </div>
+          </div>
+          <ProgressRing value={70} />
+        </section>
 
-      <section className="task-section">
-        <div className="section-title-row">
-          <h2>Upcoming Tasks</h2>
-          <Link to="/tasks">See all</Link>
-        </div>
-        <div className="task-stack">
-          {upcomingTasks.map((task) => (
-            <TaskCard
-              compact
-              key={task.title}
-              task={{
-                ...task,
-                due: task.title === "ST101 Assignment" ? "in 2 days" : task.title === "DNE Notes Review" ? "in 3 days" : "in 5 days",
-              }}
-              onSelect={() => navigate("/task-detail")}
-            />
-          ))}
-        </div>
-      </section>
+        <ProgressBar value={70} label="Weekly progress" />
 
-      <PrimaryButton className="wide-action" onClick={() => navigate("/add-task")}>
-        <span aria-hidden="true">+</span> Add Task
-      </PrimaryButton>
+        <section className="task-section">
+          <div className="section-title-row">
+            <h2>Upcoming Tasks</h2>
+            <Link to="/tasks">See all</Link>
+          </div>
+          <div className="task-stack">
+            {upcomingTasks.map((task) => (
+              <TaskCard
+                compact
+                key={task.title}
+                task={{
+                  ...task,
+                  due: task.title === "ST101 Assignment" ? "in 2 days" : task.title === "DNE Notes Review" ? "in 3 days" : "in 5 days",
+                }}
+                onSelect={() => navigate("/task-detail")}
+              />
+            ))}
+          </div>
+        </section>
+
+        <PrimaryButton className="wide-action" onClick={() => navigate("/add-task")}>
+          <span aria-hidden="true">+</span> Add Task
+        </PrimaryButton>
+      </div>
       <BottomNav />
     </main>
   );
@@ -139,36 +141,38 @@ export function TaskListScreen() {
 
   return (
     <main className="app-screen has-bottom-nav task-list-screen">
-      <ScreenHeader
-        title="My Tasks"
-        action={
-          <div className="header-actions">
-            <IconButton label="Search tasks"><Search size={20} /></IconButton>
-            <IconButton label="Filter tasks"><Filter size={20} /></IconButton>
-          </div>
-        }
-      />
-      <div className="task-tabs" role="tablist" aria-label="Filter tasks">
-        {["All", "Pending", "Completed"].map((tab) => (
-          <button
-            key={tab}
-            role="tab"
-            aria-selected={activeTab === tab}
-            className={activeTab === tab ? "selected" : ""}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <p className="task-count">{activeTab === "Completed" ? "No completed tasks yet" : "5 tasks scheduled"}</p>
-      {activeTab !== "Completed" && (
-        <section className="task-stack" aria-label="Student tasks">
-          {tasks.map((task) => (
-            <TaskCard key={task.title} task={task} onSelect={() => navigate("/task-detail")} />
+      <div className="screen-scroll">
+        <ScreenHeader
+          title="My Tasks"
+          action={
+            <div className="header-actions">
+              <IconButton label="Search tasks"><Search size={20} /></IconButton>
+              <IconButton label="Filter tasks"><Filter size={20} /></IconButton>
+            </div>
+          }
+        />
+        <div className="task-tabs" role="tablist" aria-label="Filter tasks">
+          {["All", "Pending", "Completed"].map((tab) => (
+            <button
+              key={tab}
+              role="tab"
+              aria-selected={activeTab === tab}
+              className={activeTab === tab ? "selected" : ""}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
           ))}
-        </section>
-      )}
+        </div>
+        <p className="task-count">{activeTab === "Completed" ? "No completed tasks yet" : "5 tasks scheduled"}</p>
+        {activeTab !== "Completed" && (
+          <section className="task-stack" aria-label="Student tasks">
+            {tasks.map((task) => (
+              <TaskCard key={task.title} task={task} onSelect={() => navigate("/task-detail")} />
+            ))}
+          </section>
+        )}
+      </div>
       <FloatingAddButton />
       <BottomNav />
     </main>
@@ -346,42 +350,44 @@ export function CalendarScreen() {
 
   return (
     <main className="app-screen has-bottom-nav calendar-screen">
-      <ScreenHeader
-        title="Calendar"
-        action={<IconButton label="Calendar options"><MoreVertical size={21} /></IconButton>}
-      />
-      <section className="calendar-card" aria-label="May 2025 calendar">
-        <div className="month-select">
-          <button aria-label="Previous month"><ChevronLeft size={18} /></button>
-          <h2>May 2025</h2>
-          <button aria-label="Next month"><ChevronRight size={18} /></button>
-        </div>
-        <div className="weekday-grid" aria-hidden="true">
-          {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => <span key={`${day}-${index}`}>{day}</span>)}
-        </div>
-        <div className="date-grid">
-          {calendarWeeks.flat().map((day, index) => (
-            <button
-              className={`${index < 4 ? "muted" : ""} ${selectedDay === day && index >= 4 ? "selected" : ""}`}
-              onClick={() => index >= 4 && setSelectedDay(day)}
-              key={`${day}-${index}`}
-              aria-label={`May ${day}, 2025`}
-              aria-pressed={selectedDay === day && index >= 4}
-            >
-              {day}
-            </button>
-          ))}
-        </div>
-      </section>
-      <section className="events-section">
-        <div className="section-title-row">
-          <h2>Upcoming events</h2>
-          <span>3 scheduled</span>
-        </div>
-        <div className="event-stack">
-          {calendarEvents.map((event) => <CalendarEventCard key={event.title} event={event} />)}
-        </div>
-      </section>
+      <div className="screen-scroll">
+        <ScreenHeader
+          title="Calendar"
+          action={<IconButton label="Calendar options"><MoreVertical size={21} /></IconButton>}
+        />
+        <section className="calendar-card" aria-label="May 2025 calendar">
+          <div className="month-select">
+            <button aria-label="Previous month"><ChevronLeft size={18} /></button>
+            <h2>May 2025</h2>
+            <button aria-label="Next month"><ChevronRight size={18} /></button>
+          </div>
+          <div className="weekday-grid" aria-hidden="true">
+            {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => <span key={`${day}-${index}`}>{day}</span>)}
+          </div>
+          <div className="date-grid">
+            {calendarWeeks.flat().map((day, index) => (
+              <button
+                className={`${index < 4 ? "muted" : ""} ${selectedDay === day && index >= 4 ? "selected" : ""}`}
+                onClick={() => index >= 4 && setSelectedDay(day)}
+                key={`${day}-${index}`}
+                aria-label={`May ${day}, 2025`}
+                aria-pressed={selectedDay === day && index >= 4}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+        </section>
+        <section className="events-section">
+          <div className="section-title-row">
+            <h2>Upcoming events</h2>
+            <span>3 scheduled</span>
+          </div>
+          <div className="event-stack">
+            {calendarEvents.map((event) => <CalendarEventCard key={event.title} event={event} />)}
+          </div>
+        </section>
+      </div>
       <FloatingAddButton />
       <BottomNav />
     </main>
@@ -406,20 +412,22 @@ export function SuccessScreen() {
 export function ProfileScreen() {
   return (
     <main className="app-screen has-bottom-nav profile-screen">
-      <ScreenHeader title="Profile" action={<IconButton label="Settings"><Settings size={21} /></IconButton>} />
-      <section className="profile-card" aria-label="Student profile">
-        <div className="avatar">AG</div>
-        <h1>Akwande Gqoboka</h1>
-        <p>akwandegqoboka@gmail.com</p>
-      </section>
-      <section className="profile-menu" aria-label="Profile options">
-        <ProfileMenuItem label="Study Goals" icon={<Target size={20} />} />
-        <ProfileMenuItem label="Statistics" icon={<TrendingUp size={20} />} />
-        <ProfileMenuItem label="Settings" icon={<Settings size={20} />} />
-        <ProfileMenuItem label="Help & Support" icon={<CircleHelp size={20} />} />
-        <ProfileMenuItem label="Log Out" icon={<LogOut size={20} />} danger />
-      </section>
-      <Link className="offline-demo-link" to="/offline">Preview offline state</Link>
+      <div className="screen-scroll">
+        <ScreenHeader title="Profile" action={<IconButton label="Settings"><Settings size={21} /></IconButton>} />
+        <section className="profile-card" aria-label="Student profile">
+          <div className="avatar">AG</div>
+          <h1>Akwande Gqoboka</h1>
+          <p>akwandegqoboka@gmail.com</p>
+        </section>
+        <section className="profile-menu" aria-label="Profile options">
+          <ProfileMenuItem label="Study Goals" icon={<Target size={20} />} />
+          <ProfileMenuItem label="Statistics" icon={<TrendingUp size={20} />} />
+          <ProfileMenuItem label="Settings" icon={<Settings size={20} />} />
+          <ProfileMenuItem label="Help & Support" icon={<CircleHelp size={20} />} />
+          <ProfileMenuItem label="Log Out" icon={<LogOut size={20} />} danger />
+        </section>
+        <Link className="offline-demo-link" to="/offline">Preview offline state</Link>
+      </div>
       <BottomNav />
     </main>
   );
