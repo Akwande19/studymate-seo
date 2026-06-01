@@ -1,4 +1,14 @@
-import { absoluteUrl, siteConfig } from "./site";
+import { siteConfig } from "@/lib/site";
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+export type BreadcrumbItem = {
+  name: string;
+  path: string;
+};
 
 type ArticleSchemaInput = {
   title: string;
@@ -54,6 +64,34 @@ export const softwareApplicationSchema = {
   },
 };
 
+export function buildFaqSchema(items: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export function buildBreadcrumbSchema(items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.path}`,
+    })),
+  };
+}
+
 export function buildArticleSchema({
   title,
   description,
@@ -68,7 +106,7 @@ export function buildArticleSchema({
     description,
     datePublished: publishedAt,
     dateModified: updatedAt,
-    mainEntityOfPage: absoluteUrl(path),
+    mainEntityOfPage: `${siteConfig.url}${path}`,
     author: {
       "@type": "Organization",
       "@id": `${siteConfig.url}/#organization`,
